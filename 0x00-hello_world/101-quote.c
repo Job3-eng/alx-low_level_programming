@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<unistd.h>
 /**
- * main - main entry
+ * main - Entry point
  * Return : always 1 (sucess)
  */
 int main(void)
