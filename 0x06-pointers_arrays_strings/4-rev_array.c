@@ -18,7 +18,7 @@ void reverse_array(int *a, int n)
 		x++;
 	}
 
-	for (z = 0; z < i / 2; z++)
+	for (z = 0; z < y / 2; z++)
 	{
 		swap = a[z];
 		a[z] = *x;
