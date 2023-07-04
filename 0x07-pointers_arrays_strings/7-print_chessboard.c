@@ -4,17 +4,17 @@
  * @a: matrix
  *
  *
- * Return: chessboard.
+ * Return: void.
  */
 void print_chessboard(char (*a)[8])
 {
-	int a, b;
+	int row, column;
 
-	for (a = 0; a <= 7; a++)
+	for (row = 0; row < 8; row++)
 	{
-		for (b = 0; b <= 7; b++)
+		for (column = 0; column < 8; column++)
 		{
-			_putchar(a[a][b]);
+			_putchar(a[row][column]);
 		}
 		_putchar('\n');
 	}
