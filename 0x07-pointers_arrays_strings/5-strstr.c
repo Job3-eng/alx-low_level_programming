@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdio.h>
 /**
  * _strstr - prints characters of s1 in s2.
  * @haystack: source
