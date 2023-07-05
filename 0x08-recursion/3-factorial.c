@@ -6,18 +6,16 @@
  */
 int factorial(int n)
 {
-	int a;
-	int fact;
-
-	while (a < n)
+	if (n < 0)
 	{
-		if (a < 0)
-		{
-			return (-1);
-		}
-
-		fact = fact * a;
-		a++;
+		return (-1);
 	}
-	return (fact);
+	else if (n == 0 || n == 1)
+	{
+		return (1);
+	}
+	else
+	{
+		return (n * factorial(n - 1));
+	}
 }
