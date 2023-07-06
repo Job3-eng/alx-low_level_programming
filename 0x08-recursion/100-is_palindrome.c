@@ -1,8 +1,8 @@
 #include "main.h"
 /**
- * s_len - calculates length
+ * s_len - calculating the length of a string.
  * @s: string
- * Return: string.
+ * Return: length.
  */
 int s_len(char *s)
 {
@@ -16,35 +16,33 @@ int s_len(char *s)
 	}
 }
 /**
- * palindrome - check if a string is a palindrome.
+ * palindrome - checking for a palindrome.
  * @s: string
  * @a: point of recursion
- * @len: length of the string
- * Return: 1 if is palindrome otherwise 0.
+ * @length: length
+ * Return: 1 otherwise 0.
  */
-int palindrome(char *s, int a, int len)
+int palindrome(char *s, int a, int length)
 {
-	if (*(s + a) == *(s + len - 1 - a) && a == (len / 2))
+	if (*(s + a) == *(s + length - 1 - a) && a == (length / 2))
 	{
 		return (1);
 	}
-	else if (*(s + a) != *(s + len - 1 - a))
+	else if (*(s + a) != *(s + length - 1 - a))
 	{
 		return (0);
 	}
 	else
 	{
-		return (palindrome(s, a + 1, len));
+		return (palindrome(s, a + 1, length));
 	}
 }
 /**
- * is_pali - checking for a palindrome.
+ * is_palindrome - checking for a palindrome.
  * @s: string
- *
- *
- * Return: 1 if palindrome otherwise 0.
+ * Return: 1 otherwise 0.
  */
-int is_pali(char *s)
+int is_palindrome(char *s)
 {
 	if (palindrome(s, 0, s_len(s)) == 1)
 		return (1);
