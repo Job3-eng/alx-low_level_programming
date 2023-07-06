@@ -46,7 +46,7 @@ int palindrome(char *s, int a, int length)
  */
 int is_pali(char *s)
 {
-	if (palindrome(s, 0, s_length(s)) == 1)
+	if (palindrome(s, 0, s_len(s)) == 1)
 		return (1);
 	else
 		return (0);
