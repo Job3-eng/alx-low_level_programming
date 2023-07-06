@@ -19,22 +19,22 @@ int s_len(char *s)
  * palindrome - check if a string is a palindrome.
  * @s: string
  * @a: point of recursion
- * @length: length of the string
+ * @len: length of the string
  * Return: 1 if is palindrome otherwise 0.
  */
-int palindrome(char *s, int a, int length)
+int palindrome(char *s, int a, int len)
 {
-	if (*(s + a) == *(s + length - 1 - a) && a == (length / 2))
+	if (*(s + a) == *(s + len - 1 - a) && a == (len / 2))
 	{
 		return (1);
 	}
-	else if (*(s + a) != *(s + length - 1 - a))
+	else if (*(s + a) != *(s + len - 1 - a))
 	{
 		return (0);
 	}
 	else
 	{
-		return (palindrome(s, a + 1, length));
+		return (palindrome(s, a + 1, len));
 	}
 }
 /**
