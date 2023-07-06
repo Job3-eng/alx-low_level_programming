@@ -1,14 +1,5 @@
 #include "main.h"
 /**
- * is_prime_number- checking for prime number
- * @n: number
- * Return: prime number
- * int is_prime_number(int n)
- * {
- * return (checking_prime(n, 1));
- * }
- */
-/**
  * checking_prime- checking if number is prime
  *
  * @n: number
