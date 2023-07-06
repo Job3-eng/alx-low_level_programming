@@ -1,42 +1,28 @@
 #include "main.h"
+#include <stdio.h>
 /**
- * is_prime_number- prime number calculation
+ * is_prime_number- checking for prime number
  * @n: number
- * Return: if prime return 1 otherwise 0
+ * Return: prime number
  */
 int is_prime_number(int n)
 {
-	if (n <= 1)
-	{
-		return (0);
-	}
-	else if (n == 2)
-	{
-		return (1);
-	}
-	else
-	{
-		return (i_prime(n, 2));
-	}
+	return (checking_prime(n, 1));
 }
 /**
- * i_prime- calculate prime number
+ * checking_prime- checking if number is prime
+ *
  * @n: number
  * @a: devisor
- * Return: 1 if prime 0 otherwise
+ * Return: prime number
  */
-int i_prime(int n, int a)
+int checking_prime(int n, int a)
 {
-	if (n % a == 0)
-	{
+	if (n <= 1)
 		return (0);
-	}
-	else if (a == (n - 1) && n % a != 0)
-	{
+	if (n % a == 0 && a > 1)
+		return (0);
+	if ((n / a) < a)
 		return (1);
-	}
-	else
-	{
-		return (i_prime(n, a + 1));
-	}
+	return (checking_prime(n, a + 1));
 }
