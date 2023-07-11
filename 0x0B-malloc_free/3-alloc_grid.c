@@ -1,26 +1,44 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
 /**
- * **alloc_grid- main entry point
- * @width: 1st measure
- * @height: 2nd measure
+ * alloc_grid - main entry point
+ * @width: width 1st
+ * @height: height 2nd
  * Return: pointer
  */
 int **alloc_grid(int width, int height)
 {
+	int **m;
 	int a, b;
-
-	int *p = NULL;
 
 	if (width <= 0 || height <= 0)
 		return (NULL);
 
-	p = (int *)malloc(width * height * sizeof(int));
+	m = malloc(sizeof(int *) * height);
 
-	for (a = 0; a < width * height; a++)
+	if (m == NULL)
+		return (NULL);
+
+	for (a = 0; a < height; a++)
 	{
+		m[a] = malloc(sizeof(int) * width);
+
+		if (m[a] == NULL)
+		{
+			for (; a >= 0; a--)
+				free(m[a]);
+
+			free(m);
+			return (NULL);
+		}
 	}
 
-	return (p);
+	for (a = 0; a < height; a++)
+	{
+		for (b = 0; b < width; b++)
+			m[a][b] = 0;
+	}
+
+	return (m);
 }
+
