@@ -22,7 +22,7 @@ int c_word(char *a)
 			h++;
 		}
 	}
-	return (w);
+	return (h);
 }
 /**
  * **strtow - splitng  string to words
