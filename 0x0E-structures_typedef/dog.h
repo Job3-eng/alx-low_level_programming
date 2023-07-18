@@ -21,5 +21,6 @@ void print_dogg(struct dog *a);
 dog_z *new_dogg(char *name, float age, char *owner);
 
 void free_dogg(dog_z *a);
+void init_dog(struct dog *d, char *name, float age, char *owner);
 
 #endif
