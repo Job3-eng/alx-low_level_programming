@@ -1,52 +1,48 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "variadic_functions.h"
-
 /**
 * print_all - printing everything
 * @format: arguments passed
 */
-
 void print_all(const char * const format, ...)
 {
-	unsigned int count = 0, b, a = 0;
-	char *c;
-	const char argument[] = "cifs";
-	va_list myListng;
+	va_list argument;
+	char *str;
+	int a = 0;
+	char c;
+	float b;
 
-	va_start(myListing, format);
-	while (format && format[count])
+	va_start(argument, format);
+
+	while (format && format[a])
 	{
-		b = 0;
-		while (argument[b])
+		switch (format[a])
 		{
-			if (format[count] == argument[b] && a)
-			{
-				printf(", ");
+			case 'c':
+				c = va_arg(argument, int);
+				printf("%c", c);
 				break;
-			} b++;
+			case 'i':
+				printf("%d", va_arg(argument, int));
+				break;
+			case 'f':
+				printf("%f", va_arg(argument, double));
+				break;
+			case 's':
+				str = va_arg(argument, char *);
+				if (str == NULL)
+					str = "(nil)";
+				printf("%s", str);
+				break;
+			default:
+				break;
 		}
-		switch (format[count])
-		{
-		case 'c':
-			printf("%c", va_arg(myListing, int)), a = 1;
-			break;
-		case 'i':
-			printf("%d", va_arg(myListing, int)), a = 1;
-			break;
-		case 'f':
-			printf("%f", va_arg(myListing, double)), a = 1;
-			break;
-		case 's':
-			c = va_arg(myListing, char *), a = 1;
-			if (!c)
-			{
-				printf("(nil)");
-				break;
-			}
-			printf("%s", c);
-			break;
-		} count++;
+		if (format[a + 1])
+			printf(", ");
+		a++;
 	}
-	printf("\n"), va_end(myListing);
+	printf("\n");
+
+	va_end(argument);
 }
