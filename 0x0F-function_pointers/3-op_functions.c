@@ -51,8 +51,6 @@ int op_div(int a, int b)
 {
 	return (a / b);
 }
-
-
 /**
  * op_mod - modulo
  * @a: first
@@ -60,7 +58,6 @@ int op_div(int a, int b)
  *
  * Return: divisor
  */
-
 int op_mod(int a, int b)
 {
 	return (a % b);
