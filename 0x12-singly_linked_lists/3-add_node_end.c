@@ -4,15 +4,15 @@
 
 list_t *new_node(const char *str);
 /**
- * add_node_end - addnew node.
- * @head: pointer of  list_t
+ * add_node_end - adding   new node.
+ * @head: pointer
  * @str: string
  *
  * Return: pointer
  */
 list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *new_s;
+	list_t *new;
 
 	if (!(*head))
 	{
@@ -22,9 +22,9 @@ list_t *add_node_end(list_t **head, const char *str)
 
 	if (!(*head)->next)
 	{
-		new_s = new_node(str);
-		new_s->next = (*head)->next;
-		(*head)->next = new_s;
+		new = new_node(str);
+		new->next = (*head)->next;
+		(*head)->next = new;
 	}
 	else
 		add_node_end(&(*head)->next, str);
@@ -33,26 +33,26 @@ list_t *add_node_end(list_t **head, const char *str)
 }
 
 /**
- * new_node - create a new string.
+ * new_node - creating  new node.
  * @str: string
  *
  * Return: pointer
  */
 list_t *new_node(const char *str)
 {
-	list_t *new_s;
-	size_t length;
+	list_t *new;
+	size_t len;
 
-	new_s = malloc(sizeof(list_t));
-	if (!new_s)
+	new = malloc(sizeof(list_t));
+	if (!new)
 		return (NULL);
-	length = 0;
-	while (str[length])
-		length++;
+	len = 0;
+	while (str[len])
+		len++;
 
-	new_s->str = strdup(str);
-	new_s->length = length;
-	new_s->next = NULL;
-	return (new_s);
+	new->str = strdup(str);
+	new->len = len;
+	new->next = NULL;
+	return (new);
 }
 
