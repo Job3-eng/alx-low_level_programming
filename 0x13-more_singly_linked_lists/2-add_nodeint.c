@@ -1,7 +1,7 @@
 #include "lists.h"
 
 /**
- * add_nodeint - adding  a neat the start of the node 
+ * add_nodeint - adding  a neat the start of the node
  * @head: pointer
  * @n: data to be  inserted
  *
