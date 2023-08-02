@@ -3,7 +3,7 @@
 /**
  * insert_nodeint_at_index - inserting  node
  * @head: pointer of first node
- * @idx: index 
+ * @idx: index
  * @n: data
  *
  * Return: pointer
