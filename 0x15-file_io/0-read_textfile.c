@@ -1,28 +1,39 @@
 #include "main.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * read_textfile- Reading text in a  file.
- * @filename: file
- * @letters: number of characters
- * Return: number when successfull
+ * read_textfile - reading file
+ * @filename: variable
+ * @letters: size
+ * Return: total number of characters 0 otherwise
  */
+
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char *bufffer;
-	ssize_t fd_p;
-	ssize_t w_i;
-	ssize_t t_i;
+	ssize_t file_s, let_s, w_s;
+	char *text_p;
 
-	fd_p = open(filename, O_RDONLY);
-	if (fd_p == -1)
+	text_p = malloc(letters);
+	if (text_p == NULL)
 		return (0);
-	buffer = malloc(sizeof(char) * letters);
-	t_i = read(fd_p, bufffer, letters);
-	w_i = write(STDOUT_FILENO, bufffer, t_i);
 
-	free(bufffer);
-	close(fd_p);
-	return (w_i);
+	if (filename == NULL)
+		return (0);
+
+	file_s = open(filename, O_RDONLY);
+
+	if (file_s == -1)
+	{
+		free(text_p);
+		return (0);
+	}
+
+	let_s = read(file_s, text_p, letters);
+
+	w_s = write(STDOUT_FILENO, text_p, let_s);
+
+	close(file_s);
+
+	return (w_s);
 }
-
