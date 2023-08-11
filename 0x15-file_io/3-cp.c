@@ -1,98 +1,110 @@
-#include "main.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-char *create_buffer(char *file);
-void close_file(int fd);
-
-/**
- * create_buffer - Allocating  bytes in buf.
- * @file:  name file buffer.
- * Return: A pointer.
- */
-char *create_buffer(char *file)
-{
-	char *buffer_1;
-
-	buffer_1 = malloc(sizeof(char) * 1024);
-
-	if (buffer_1 == NULL)
-	{
-		dprintf(STDERR_FILENO,
-			"Error: Can't write to %s\n", file);
-		exit(99);
-	}
-
-	return (buffer_1);
-}
+#define BUFSIZE 1024
 
 /**
- * close_file - Closing file.
- * @fd: descriptor for closer.
- */
-void close_file(int fd)
-{
-	int a;
-
-	a = close(fd);
-
-	if (a == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
-
-/**
- * main - Coping file conntents.
- * @argc: arguments.
- * @argv: array.
+ * _close - file descriptor error info
+ * @fd: the file
  *
- * Return: 0  success.
+ * Return: 0 success, -1 otherwise
  */
-int main(int argc, char *argv[])
+int _close(int fd)
 {
-	int from_1, to_2, r_s, w_s;
-	char *buffer;
+	if (!close(fd))
+		return (0);
+	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+	return (-1);
+
+}
+
+/**
+ * _read - read  file and display error
+ * @filename: file name
+ * @fd: file descriptor
+ * @buf: buffer
+ * @count: number bytes
+ *
+ * Return: bytes number -1 ohterwise
+ */
+ssize_t _read(const char *filename, int fd, char *buf, size_t count)
+{
+	ssize_t bytes_read = read(fd, buf, count);
+
+	if (bytes_read > -1)
+		return (bytes_read);
+	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
+	return (-1);
+}
+
+/**
+ * _write - writing to a file and printing error information
+ * @filename: file name
+ * @fd: file descriptor
+ * @buf: buffer
+ * @count: bytes number
+ *
+ * Return: number of bytes, or -1 otherwise
+ */
+ssize_t _write(const char *filename, int fd, const char *buf, size_t count)
+{
+	ssize_t bytes_written = write(fd, buf, count);
+
+	if (bytes_written > -1)
+		return (bytes_written);
+	dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
+	return (-1);
+}
+
+/**
+ * main - file contents
+ * @argc: arg count
+ * @argv:   vales of  arg
+ *
+ * Return: 1 always
+ */
+int main(int argc, const char *argv[])
+{
+	int fd_in, fd_out;
+	ssize_t bytes_read;
+	char buffer[BUFSIZE];
 
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-
-	buffer = create_buffer(argv[2]);
-	from_1 = open(argv[1], O_RDONLY);
-	r_s = read(from, buffer, 1024);
-	to_2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-
-	do {
-		if (from_1 == -1 || r_s == -1)
+	fd_in = open(argv[1], O_RDONLY);
+	if (fd_in < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
+	fd_out = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (fd_out < 0)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		_close(fd_in);
+		exit(99);
+	}
+	while ((bytes_read = _read(argv[1], fd_in, buffer, BUFSIZE)))
+	{
+		if (bytes_read < 0)
 		{
-			dprintf(STDERR_FILENO,
-				"Error: Can't read from file %s\n", argv[1]);
-			free(buffer);
+			_close(fd_in);
+			_close(fd_out);
 			exit(98);
 		}
-
-		w_s = write(to, buffer, r);
-		if (to_2 == -1 || w_s == -1)
+		if (_write(argv[2], fd_out, buffer, bytes_read) < 0)
 		{
-			dprintf(STDERR_FILENO,
-				"Error: Can't write to %s\n", argv[2]);
-			free(buffer);
+			_close(fd_in);
+			_close(fd_out);
 			exit(99);
 		}
-
-		r_s = read(from_1, buffer, 1024);
-		to_2 = open(argv[2], O_WRONLY | O_APPEND);
-
-	} while (r_s > 0);
-
-	free(buffer);
-	close_file(from_1);
-	close_file(to_2);
-
+	}
+	if ((_close(fd_in) | _close(fd_out)) < 0)
+		exit(100);
 	return (0);
 }
-
